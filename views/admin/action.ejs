@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Leave Form</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          background-color: #f4f4f4;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+        }
+    
+        form {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 15px;
+          background-color: white;
+          padding: 20px;
+          border-radius: 8px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    
+        h1 {
+          grid-column: span 2;
+          text-align: center;
+        }
+    
+        label {
+          font-weight: bold;
+        }
+    
+        input {
+          width: 100%;
+          padding: 10px;
+          margin: 5px 0;
+          box-sizing: border-box;
+        }
+        select{
+          width: 100%;
+          padding: 10px;
+          margin: 5px 0;
+          box-sizing: border-box;
+        }
+    
+        input[type="submit"] {
+          grid-column: span 2;
+          background-color: #4caf50;
+          color: white;
+          cursor: pointer;
+        }
+        input[type="submit"]:hover {
+          background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="leave-form">
+        <h2>Employee Leave Form</h2>
+        <% 
+        if(typeof message !== 'undefined'){
+            %>
+            <p style="color: forestgreen;"> <%= message %></p>
+            <%
+        }
+        %>
+        <form action="" method="post">
+            <div class="form-group">
+                <label for="employee-name">Employee Name:</label>
+                <input type="text" id="employee-name" value="<%= leave.name %>"   name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="leave-type">Your Employee ID:</label>
+                <input type="text" value="<%= leave.eid %>" name="eid">
+            </div>
+            <div class="form-group">
+                <label for="leave-type">Leave Type:</label>
+                <input type="text" value="<%= leave.leave_type %>" name="leave_type">
+            </div>
+            <div class="form-group">
+                <label for="start-date">Start Date:</label>
+                <input type="date" id="start-date" value="<%= leave.start_date %>" name="start_date" required>
+            </div>
+            <div class="form-group">
+                <label for="end-date">End Date:</label>
+                <input type="date" id="end-date" value="<%= leave.end_date %>" name="end_date" required>
+            </div>
+            <div class="form-group">
+                <label for="end-date">Days:</label>
+                <input type="text" id="end-date" value="<%= leave.days %>" name="days" required>
+            </div>
+
+            <div class="form-group">
+              <label for="leave-type">Action:</label>
+              <select id="leave-type" id="status" name="status">
+                  <option value="Approved">Approved</option>
+                  <option value="Rejected">Rejected</option>
+                  <option value="Pending">Pending</option>
+              </select>
+              <div class="form-group">
+                <label for="reason">Reason:</label>
+                <textarea id="reason" name="reason" rows="4" ></textarea>
+            </div>
+          </div>
+            <div class="form-group">
+                <input type="submit" value="Action">
+            </div>
+        </form>
+    </div>
+    
+</body>
+</html>

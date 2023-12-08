@@ -1,0 +1,115 @@
+
+<% include('../layouts/header.ejs') %>
+
+
+<!-- Add CSS styles for the navigation bar and content -->
+<style>
+    .navbar {
+        background-color: #333;
+        overflow: hidden;
+     
+        background: #f4f4f4;
+        color: #000000;
+        padding: 0px;
+        transition: margin 0.3s;
+        box-shadow: 0 4px 8px 0 rgba(201, 201, 201, 0.747),
+          0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    .navbar a {
+        float: left;
+        display: block;
+        color: #000000;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    .navbar a:hover {
+        background-color: #ddd;
+        color: black;
+    }
+
+    .content {
+        margin: 20px;
+    }
+
+    .user-card {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    }
+
+    
+    .user-info {
+        margin-top: 20px;
+    }
+
+    .user-actions {
+        display: flex;
+      margin: 10px;
+      gap: 18px;
+        background-color: #007BFF;
+        color: #000000;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .btn {
+        background-color: #f9f8f6e3;
+        color: #000000;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+       
+    }
+</style>
+
+ 
+
+<!-- Add the following HTML for your navigation bar -->
+<div class="navbar">
+    <a href="/home">Home</a>
+    <a href="/profile">Profile</a>
+    <a href="/logout">Logout</a>
+</div>
+
+<div class="content">
+    <div class="user-card">
+        <h2>Welcome User, <%= user.name %></h2>
+
+        <div class="user-image">
+            <img src="userimages/<%= user.image %>" width="100px" height="100px" alt="<%= user.image %>">
+        </div>
+
+        <div class="user-info">
+            <table width="100%">
+                <tr>
+                    <td>Email</td>
+                    <td><%= user.email %></td>
+                </tr>
+                <tr>
+                    <td>Mobile</td>
+                    <td><%= user.mobile %></td>
+                </tr>
+                <tr>
+                    <td>Verified</td>
+                    <td>Yes</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="user-actions">
+            <a class="btn"  href="/edit?id=<%= user._id %>">Edit</a>
+            <br><br>
+            <a class="btn"  href="/logout">Logout</a>
+        </div>
+    </div>
+</div>
+
+ 
+
+<% include('../layouts/footer.ejs') %>

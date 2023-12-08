@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>header</title>
+
+</head>
+<style>
+  /* Reset some default styles for better consistency */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  /* Style the dashboard container */
+  .dashboard {
+    display: flex;
+    background: #f4f4f4;
+  }
+
+  /* Style the sidebar */
+
+  .sidebar {
+    width: 200px;
+    background: #f4f4f4;
+    color: #000000;
+    padding: 0px;
+    transition: margin 0.3s;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+      0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+
+  .sidebar .logo {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+  .sidebar ul {
+    list-style: none;
+  }
+
+  .sidebar ul li {
+  margin-left: -17px;
+    margin-bottom: 10px;
+  }
+
+  .sidebar ul li a {
+    text-decoration: none;
+    color: #000000;
+    font-size: 16px;
+  }
+
+  /* Style the main content area */
+  .content {
+    flex: 1;
+    padding: 20px;
+  }
+
+  .content header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .user-profile {
+    display: flex;
+    align-items: center;
+  }
+
+  .user-profile img {
+    margin: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+
+  .notifications {
+    margin: 10px;
+    font-size: 18px;
+  }
+
+  /* Style dashboard cards or widgets */
+  .cards {
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+
+  .card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* padding: 20px; */
+    /* margin: 10px; */
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .card h3 {
+    margin: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    gap: 5px;
+  }
+
+  .card p {
+    margin: 10px;
+    font-size: 24px;
+    margin-top: 10px;
+  }
+  .card a :hover{
+    font-size: 30px;
+    box-shadow: #0056b3;
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+  }
+
+  .toggle-button {
+    background: #ffffff00;
+    color: #000000;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    transition: margin 0.3s;
+  }
+
+  .toggle-button:hover {
+    background: #0056b3;
+  }
+  /* Add this CSS to handle the collapsed state */
+  .sidebar.collapsed {
+    width: 0;
+    overflow: hidden;
+  }
+
+  /* Adjust the content area when the sidebar is collapsed */
+  .content {
+    transition: margin-left 1.5s;
+  }
+
+  .sidebar.collapsed + .content {
+    margin-left: 0;
+  }
+  /* header */
+  /* Style the header */
+
+  header {
+    background-color: #f4f4f4;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1),
+      0 1px 2px 0 rgba(0, 0, 0, 0.6);
+    color: #000000;
+  }
+  .app-header {
+    background: #ced9df;
+    color: #000000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3px 8px;
+    box-shadow: 0 4px 9px 0 rgba(229, 209, 209, 0.2),
+      0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+
+  /* Style the app logo */
+  .app-logo {
+    display: flex;
+    align-items: center;
+    /* box-shadow: 0 4px 9px 0 rgba(192, 192, 192, 0.2),
+      0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+  }
+
+  .app-logo img {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+
+  .app-logo span {
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  /* Style the navigation links */
+  .app-nav ul {
+    list-style: none;
+    display: flex;
+  }
+
+  .app-nav ul li {
+    margin-right: 20px;
+  }
+
+  .app-nav ul li:last-child {
+    margin-right: 0;
+  }
+
+  .app-nav ul li a {
+    text-decoration: none;
+    color: #000000;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .app-nav ul li a:hover {
+    text-decoration: underline;
+  }
+
+  /* Style the card  pie */
+  .cardpie {
+    border-radius: 50px;
+
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    text-align: center;
+  }
+
+  /* Style the chart container to center the pie chart */
+  .chart-container {
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    height: 50vh;
+  }
+
+  /* heade end */
+
+  .headcard {
+    padding: 20px;
+    transition: margin 0.3s;
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+  }
+  .card_header {
+    background-color: #61b9ff;
+    color: rgb(0, 0, 0);
+    padding: 10px;
+    font-size: 40px;
+  }
+
+  .card_container {
+    padding: 10px;
+  }
+
+  .p-3 li {
+    width: 150px;
+    text-align: center;
+    background-color: #f5f6fa;
+    border-radius: 10px;
+    box-shadow: 5px 6px lightblue;
+  }
+  .p-3 li a{
+    text-align: center;
+    margin: 15px;
+    color: white;
+  }
+  .p-3 li a:hover{
+    font-size: 15px;
+    width: 100px;
+    background-color: #f5f6fa;
+    border-radius: 19px;
+     
+  }
+
+
+
+  @media (max-width: 768px) {
+    header a {
+      margin: 0 10px;
+      font-size: 14px;
+    }
+
+    .sidebar {
+      width: 150px;
+      top: 50px;
+    }
+
+    .sidebar nav a {
+      font-size: 14px;
+    }
+
+    .card {
+      width: 100%;
+    }
+  }
+  .logo img{
+  width: 100px;
+  height: 100px;
+  }
+</style>
+<body>
+  <header class="app-header">
+    <div class="app-logo">
+      <div class="logo">
+
+          <img src="userimages/prsu.png" alt="" 
+          >
+        
+      </div>
+      <div >
+        <span >PTRSU-LMS            
+          <h6> <div class="red" style="color: red; margin-right: 10px;">Pt. Ravishankar Shukla University, Raipur</div>
+          <div class="red" style="color: rgb(19, 9, 212);margin-right: 10px;">Chhattisgarh, India</div>
+          NAAC Grade B++, Ranking by NIRF</h6>
+        </span>
+      </div>
+    </div>
+    <nav class="app-nav">
+      <ul>
+        <li>
+          <a href="/profile">
+        </a>
+        </li>
+   
+        <li>
+          <h5>
+            <a href="/logout">
+            <img
+            src="userimages/logo/exit.png"
+            alt="User Avatar"
+            width="30"
+            height="30"/>
+            Logout</a></h5>
+        </li>
+      </ul>
+    </nav>
+  </header>
+</body>
+</html>
+

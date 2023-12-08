@@ -1,0 +1,80 @@
+<%- include('../layouts/header.ejs') %>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      grid-column: span 2;
+      text-align: center;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      box-sizing: border-box;
+    }
+
+    input[type="submit"] {
+      grid-column: span 2;
+      background-color: #4caf50;
+      color: white;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+  </style>
+
+<form action="" method="POST" enctype="multipart/form-data">
+
+    <img src="userimages/<%= user.image%>" width="100px" height="100px" alt="<%= user.image%>">
+    <input type="file" name="image">
+    <input type="hidden" name="user_id" value="<%= user._id %>">
+
+    <input type="text" name="name" value="<%= user.name %>" placeholder="Enter Name" required>
+ 
+    <input type="email" name="email" value="<%= user.email %>" placeholder="Enter Email" required>
+    
+    <input type="text" name="designation" value="<%= user.designation %>" placeholder="Designation"required>
+
+    <input type="text" name="department" value="<%= user.department %>"  placeholder="Department" required>
+
+    <input type="text" name="pwd" value="<%= user.pwd %>"   placeholder="PWD">
+ 
+    <input type="number" name="mobile"  value="<%= user.mobile %>" placeholder="Enter Mobile Number" required>
+    
+    <input type="password" name="password" value="<%= user.password %>"  placeholder="Enter Password" required>
+    
+    <input type="text" name="address" value="<%= user.address %>" placeholder="Address">
+   
+    <input type="submit" value="Update Profile" >
+</form>
+
+
+
+
+<% include('../layouts/footer.ejs') %>

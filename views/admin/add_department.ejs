@@ -1,0 +1,88 @@
+<% include('../layouts/header.ejs') %>
+
+ 
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      grid-column: span 2;
+      text-align: center;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      box-sizing: border-box;
+    }
+
+    input[type="submit"] {
+      grid-column: span 2;
+      background-color: #4caf50;
+      color: white;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+  </style>
+
+
+
+
+<form action="" method="post">
+  
+  <h1>Department Registration</h1>
+
+  <% 
+  if(typeof message !== 'undefined'){
+      %>
+      <p style="color: forestgreen;"> <%= message %></p>
+      <%
+  }
+  %>
+    <input type="text" name="name" placeholder="Enter Department Name " required>
+    <input type="text" name="code" placeholder="code Name" required>
+ 
+    <!-- <input type="email" name="email" placeholder="Enter Email" required> -->
+    
+    <!-- <input type="text" name="designation" placeholder="Designation"required> -->
+
+    <!-- <input type="text" name="department" placeholder="Department" required> -->
+
+    <!-- <input type="text" name="pwd" placeholder="PWD"> -->
+ 
+    <input type="submit" value="Register">
+    
+</form>
+
+
+
+<% include('../layouts/footer.ejs') %>
+
+
+ 
