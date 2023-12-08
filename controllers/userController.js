@@ -441,7 +441,7 @@ const  loadDashboard = async(req, res)=>{
     try {
         const userData = await User.findById({_id:req.session.user_id});
         // user for home page 
-        res.redirect('dashboard',{user:userData});
+        res.render('dashboard',{user:userData});
     } catch (error) {
         console.log(error.message);
     }
