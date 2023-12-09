@@ -63,6 +63,8 @@ const sendResetPasswordMail = async (name, email, token) => {
   }
 };
 
+
+
 const loadLogin = async (req, res) => {
   try {
     res.render("login");
@@ -101,6 +103,40 @@ const verifyLogin = async (req, res) => {
     console.log(error.message);
   }
 };
+
+
+const sendvarifyMail = async(name, email, user_id)=>{
+
+  try{
+      const transporter =  nodemailer.createTransport({
+          host:'smtp.gmail.com',
+          port:587,
+          secure:false,
+          auth:{
+              user:config.emailUser,
+              pass:config.emailPassword
+          }
+       });
+      const mailOption = {
+          from:config.emailUser,
+          to:email,
+          subject:'for verification mail',
+          html:'<p> hi '+name+', Please click here to <a href="https://practice-xexa.onrender.com/verify?id='+user_id+'">Verify</a> Your mail.</p>',
+      };
+          transporter.sendMail(mailOption, function(error, info){
+              if(error){
+                  console.log(error);
+              }else{
+                  console.log("email has been sent:-",info.response);
+              }
+          })
+   
+   }catch(error){
+       console.log(error.message)
+   }
+}
+
+
 
 const loadRegister = async (req, res) => {
   try{
@@ -360,22 +396,59 @@ const loaddeleteLeave = async (req, res) => {
 // dashbord
 const loadDashboard = async (req, res) => {
   try {
-    const userData = await User.findById({ _id: req.session.user_id });
-    const PendingCount = await Leave.find({status:"Pending"}).count();
-    const approvedCount = await Leave.find({status:"Approved"}).count();
-    const RejectedCount = await Leave.find({status:"Rejected"}).count();
 
-    // user for home page
-    res.render("dashboard", {
-      user: userData,
-      PendingCount: PendingCount,
-      approvedCount:approvedCount,
-      RejectedCount:RejectedCount
-    });
+    const findUserDepartment = await User.findOne({ _id: req.session.user_id });
+
+    if (findUserDepartment) {
+      const userDepartment = findUserDepartment.department;
+      
+      // match department
+      const userData = await User.findOne({
+        $and: [
+          { _id: req.session.user_id },
+          { department: userDepartment }
+        ]
+        });
+
+
+        const PendingCount = await Leave.findOne({
+          $and:[
+            {status:"Pending"},
+            {d_name: userDepartment}
+          ]
+        }).count();
+    
+        const approvedCount = await Leave.findOne({
+          $and:[
+            {status:"Approved"},
+            {d_name: userDepartment}
+          ]
+        }).count();
+    
+        const RejectedCount = await Leave.findOne({
+          $and:[
+            {status:"Rejected"},
+            {d_name: userDepartment}
+          ]
+        }).count();
+    
+      // user for home page
+      res.render("dashboard", {
+        user: userData,
+        PendingCount: PendingCount,
+        approvedCount:approvedCount,
+        RejectedCount:RejectedCount
+      });
+
+    }
+
+
   } catch (error) {
     console.log(error.message);
   }
 };
+
+
 // loaddomhome
 const loaddomhome = async (req, res) => {
   try {
@@ -454,13 +527,34 @@ const loadstatus = async (req, res) => {
 // loadpending
 const loadpending = async (req, res) => {
   try {
-    const PendingCount = await Leave.find({status:"Pending"});
-    const leave = await Leave.find().exec();
-    res.render("pending", {
-      title: "pending",
-      leaves: leave,
-      PendingCount:PendingCount
-    });
+    const findUserDepartment = await User.findOne({ _id: req.session.user_id });
+    if (findUserDepartment) {
+      const userDepartment = findUserDepartment.department; 
+      // match department
+      const userData = await User.findOne({
+        $and: [
+          { _id: req.session.user_id },
+          { department: userDepartment }
+        ]
+        });
+
+        const PendingCount = await Leave.find({
+          $and:[
+            {status:"Pending"},
+            {d_name: userDepartment}
+          ]
+        });
+     
+        const leave = await Leave.find().exec();
+      // user for home page
+      res.render("pending", {
+        title: "pending",
+        leaves: leave,
+        PendingCount:PendingCount
+      });
+    }
+
+
   } catch (err) {
     res.json({ message: err.message });
   }
@@ -469,13 +563,35 @@ const loadpending = async (req, res) => {
 // loadapproved
 const loadapproved = async (req, res) => {
   try {
-    const approvedCount = await Leave.find({status:"Approved"});
-    const leave = await Leave.find().exec();
-    res.render("approved", {
-      title: "approved",
-      leaves: leave,
-      approvedCount:approvedCount
-    });
+
+    const findUserDepartment = await User.findOne({ _id: req.session.user_id });
+    if (findUserDepartment) {
+      const userDepartment = findUserDepartment.department; 
+      // match department
+      const userData = await User.findOne({
+        $and: [
+          { _id: req.session.user_id },
+          { department: userDepartment }
+        ]
+        });
+
+        const approvedCount = await Leave.find({
+          $and:[
+            {status:"Approved"},
+            {d_name: userDepartment}
+          ]
+        });
+     
+        const leave = await Leave.find().exec();
+      // user for home page
+      res.render("approved", {
+        title: "approved",
+        leaves: leave,
+        approvedCount:approvedCount
+      });
+    }
+
+ 
   } catch (err) {
     res.json({ message: err.message });
   }
@@ -484,13 +600,41 @@ const loadapproved = async (req, res) => {
 // loadrejected
 const loadrejected = async (req, res) => {
   try {
-    const RejectedCount = await Leave.find({status:"Rejected"});
-    const leave = await Leave.find().exec();
-    res.render("rejected", {
-      title: "rejected",
-      leaves: leave,
-      RejectedCount:RejectedCount
-    });
+
+
+    const findUserDepartment = await User.findOne({ _id: req.session.user_id });
+    if (findUserDepartment) {
+      const userDepartment = findUserDepartment.department; 
+      // match department
+      const userData = await User.findOne({
+        $and: [
+          { _id: req.session.user_id },
+          { department: userDepartment }
+        ]
+        });
+
+        const RejectedCount = await Leave.find({
+          $and:[
+            {status:"Rejected"},
+            {d_name: userDepartment}
+          ]
+        });
+     
+        const leave = await Leave.find().exec();
+      // user for home page
+      res.render("rejected", {
+        title: "rejected",
+        leaves: leave,
+        RejectedCount:RejectedCount
+      });
+    }
+
+
+
+
+
+
+
   } catch (err) {
     res.json({ message: err.message });
   }

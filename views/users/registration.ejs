@@ -333,6 +333,30 @@
       width: 100px;
       height: 100px;
       }
+
+
+      @media (max-width: 368px) {
+  form {
+    grid-template-columns: 1fr; /* Change to a single column layout for small screens */
+  }
+
+  input,
+  select {
+    width: 100%; /* Make the input and select elements full width on small screens */
+  }
+
+  .form-group {
+    margin-bottom: 15px; /* Increase margin for better spacing on small screens */
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  input[type="submit"] {
+    grid-column: span 1; /* Change the submit button to span one column */
+  }
+}
     </style>
   </head>
 
@@ -353,30 +377,31 @@
               <%
           }
           %>
-        
-            <input type="text" name="name" placeholder="Full Name" required>
+           
+         
+            <input type="text"  name="name" placeholder="Full Name" required>
             <div class="form-group">
-              <label for="">Date of Birth</label>
+              <label for="">Date of Birth</label> 
               <input type="date" name="dob" placeholder="Date of Birth" required>
             </div>
             
             
             <div class="form-group">
-              <label for="Gender">Gender</label>
+              <label for="Gender">Gender</label> 
               <select name="gender" id="gender">
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
               </select>
             </div>
          
-            <input type="email" name="email" placeholder="Enter Email" required>
+            <input type="email" name="email" placeholder="Enter Email" required> 
             
-            <input type="text" name="designation" placeholder="Designation"required>
+            <input type="text" name="designation" placeholder="Designation">
         
             <!-- get data from database -->
             <% if (department != ''){%>
             <div class="form-group">
-              <label for="leave-type">Department:</label>
+              <label for="leave-type">Department:</label> 
               <select id="employee-name" name="department" >
                 <% department.forEach((row, index) =>{ %>
                   <option value="<%= row.name %>"> <%= row.name %>  %> </option>
@@ -388,12 +413,12 @@
             <% } %>
         
          
-            <input type="number" name="mobile" placeholder="Enter Mobile Number" required>
+            <input type="number" name="mobile" placeholder="Enter Mobile Number" required> 
             
-            <input type="password" name="password" placeholder="Enter Password" required>
+            <input type="password" name="password" placeholder="Enter Password" required> 
             
             <input type="text" name="address" placeholder="Address">
-            <input type="file" name="image" required>
+            <input type="file" name="image" required> 
             <input type="submit" value="Register">
             
         </form> 
