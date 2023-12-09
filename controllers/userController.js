@@ -467,7 +467,8 @@ const  loadstatus = async(req, res)=>{
 // loadhistory
 const  loadhistory = async(req, res)=>{
     try {
-        const leaves = await Leave.find().exec();
+        const id =req.query.id;
+        const leaves = await Leave.find({user_id:id});
         res.render('history', {
             title: 'history',
             leaves: leaves,
@@ -476,6 +477,23 @@ const  loadhistory = async(req, res)=>{
         res.json({ message: err.message });
     }
 }
+
+
+// print
+const loadprint = async(req, res)=>{
+    try {
+        const id = req.query.id;
+        const leaveData = await Leave.findById({ _id: id });
+        if (leaveData) {
+          res.render("print", { leave: leaveData });
+        } else {
+          res.redirect("/home");
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+}
+
 
 module.exports ={
     loadRegister,
@@ -499,5 +517,6 @@ module.exports ={
     addLeave,
     loadapplyleave,
     loadstatus,
-    loadhistory
+    loadhistory,
+    loadprint
 }

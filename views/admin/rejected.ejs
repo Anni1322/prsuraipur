@@ -43,8 +43,8 @@
         <td><%= row.end_date %></td>             
         <td><%= row.status %></td>             
         <td>
-            <a href="/admin/action?id=<%= row._id %>"> <i class="text-success fas fa-edit fa-lg mx-3 "></i></a>
-            <i class="text-danger fas fa-trash fa-lg mx-3" onclick="confirmDelete('<%= row._id %>')" ></i>
+            <a href="/admin/action?id=<%= row._id %>"> <i class="text-success fas fa-edit fa-lg mx-3 mt-2 "></i></a>
+            <i class="text-danger fas fa-trash fa-lg mx-3 mt-4" onclick="confirmDelete('<%= row._id %>')" ></i>
         </td>
     </tr>                            
 <% }) %>               

@@ -1,0 +1,218 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Print View - Employee Leave Form</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .leave-details {
+            margin-top: 20px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        .print-button {
+            display: none;
+        }
+
+        @media print {
+            .print-button {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Leave Details Application</h2>
+
+    <div class="leave-details">
+        <label for="employee-name">Employee Name:</label>
+        <p><%= leave.name %></p>
+
+        <label for="department">Department:</label>
+        <p><%= leave.d_name %></p>
+
+        <label for="eid">Your EID:</label>
+        <p><%= leave.eid %></p>
+
+        <label for="leave-type">Leave Type:</label>
+        <p><%= leave.leave_type %></p>
+
+        <label for="start-date">Start Date:</label>
+        <p><%= leave.start_date %></p>
+
+        <label for="end-date">End Date:</label>
+        <p><%= leave.end_date %></p>
+
+        <label for="reason">Reason:</label>
+        <p><%= leave.reason %></p>
+
+        <label for="days">Leave Duration (in days):</label>
+        <p><%= leave.days %></p>
+    </div>
+
+    <button class="btn bg-primary print-button" onclick="window.print()">Print</button>
+
+
+
+
+    
+</body>
+</html> -->
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        header {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        section {
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+    <header>        
+        
+  <span style="color: red;"> Pt. Ravishankar Shukla University, Raipur <br>
+    Chhattisgarh, India</span><br>
+    NAAC <span style="color: rgb(62, 244, 26);">Grade B++,</span> Ranking by NIRF<br><br>
+    <h3>Leave Application</h3>
+    </header>
+ 
+
+    <section>
+        <p><strong>Employee Name:</strong>
+        <%= leave.name %>
+        <p><strong>Department:</strong>
+        <%= leave.d_name %>
+        <p><strong>Your EID:</strong>
+        <%= leave.eid %>
+        <p><strong>Leave Type:</strong>
+        <%= leave.leave_type %>
+        <p><strong>Start Date:</strong>
+        <%= leave.start_date %>
+        <p><strong>End Date:</strong>
+        <%= leave.end_date %>
+        <p><strong>Leave Duration (in days):</strong>
+        <%= leave.days %>
+        <p></p>
+    </section>
+
+    <!-- <section>
+        <h2>Academic Information</h2>
+        <table>
+            <tr>
+                <th>College / Institution Name</th>
+                <td>Pt. Ravishankar Shukla University, Raipur(CG)</td>
+            </tr>
+            <tr>
+                <th>Name of College HOD</th>
+                <td>Dr. Sanjay Kumar</td>
+            </tr>
+            <tr>
+                <th>Mobile no of HOD</th>
+                <td>9827172100</td>
+            </tr>
+            <tr>
+                <th>Email of HOD</th>
+                <td>sanraipur@rediffmail.com</td>
+            </tr>
+        </table>
+    </section> -->
+
+    <!-- <section>
+        <h2>Center Information</h2>
+        <p><strong>Selected Training center 1:</strong> NIC STATE CENTRE MANTRALAYA</p>
+        <p><strong>Selected Training center 2:</strong> RAIPUR</p>
+        <p><strong>Selected Training center 3:</strong> RAIGARH</p>
+    </section> -->
+
+    <!-- <section>
+        <h2>Education</h2>
+        <table>
+            <tr>
+                <th>S.No.</th>
+                <th>Passing Year</th>
+                <th>Semester</th>
+                <th>Obtained Marks</th>
+                <th>Total Marks</th>
+                <th>Percent/Grading</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>2022-2023</td>
+                <td>1</td>
+                <td>646</td>
+                <td>1000</td>
+                <td>65%</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>2022-2023</td>
+                <td>2</td>
+                <td>666</td>
+                <td>1000</td>
+                <td>67%</td>
+            </tr>
+        </table>
+
+        <p><strong>Aggregate Percentage:</strong> 65.600%</p>
+    </section> -->
+    <header style="text-align: end;">Signature of HOD</header>
+    
+   
+</body>
+</html>
+<button class="btn bg-primary print-button" onclick="window.print()">Print</button>

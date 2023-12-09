@@ -96,6 +96,7 @@ user_route.get('/Profile',auth.isLogin, userController.Profile);
 
 user_route.get('/status',auth.isLogin, userController.loadstatus);
 user_route.get('/history',auth.isLogin, userController.loadhistory);
+user_route.get('/print',auth.isLogin, userController.loadprint);
 
 
 
