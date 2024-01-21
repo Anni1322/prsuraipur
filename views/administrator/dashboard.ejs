@@ -356,11 +356,11 @@
         <!-- Sidebar content (e.g., navigation links, user profile) -->
        
         <ul class="p-3">
-          <li><a href="/admin/home">Dashboard</a></li>
-          <li><a href="/admin/database">Database</a></li>
-          <li><a href="/admin/profile">Profile</a></li>
-          <li><a href="/admin/register">Add Employee</a></li>
-          <li><a href="/admin/department">Add department</a></li>
+          <li><a href="/administrator/home">Dashboard</a></li>
+          <li><a href="/administrator/database">Database</a></li>
+          <li><a href="/administrator/profile">Profile</a></li>
+          <li><a href="/administrator/register">Add Employee</a></li>
+          <li><a href="/administrator/department">Add department</a></li>
           <!-- Add more navigation links as needed -->
         </ul>
       </aside>
@@ -386,10 +386,10 @@
               height="200"
             />
           </a>
-            <span  >Welcome <span style="color: rgb(0, 136, 255); font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">Admin</span>, <%= user.name %></span>
+            <span  >Welcome <span style="color: rgb(0, 136, 255); font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">administrator</span>, <%= user.name %></span>
           </div>
           <div class="notification">
-            <a href="/admin/pending">
+            <a href="/administrator/pending">
               <i class="text-danger fas fa-bell fa-lg mx-1 mt-3"></i>
           <h6 class="badge"><%= PendingCount %> </h6>
         </a>
@@ -397,58 +397,40 @@
 
         </header>
         <h2>Dashboard</h2>
-        <!-- <nav aria-label="breadcrumb">
+        <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+            <li class="breadcrumb-item"><a href="/administrator">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">
+              <a href="/dashboard">Dashboard</a>
+            </li>
           </ol>
-          <h2>
-            <a href="/admin/homeadministrator" style="text-decoration: none; color: #0056b3;">Administrator Status</a>
-          </h2>
-        </nav> -->
+        </nav>
         <section class="cards">
           <!-- Cards or widgets for displaying data or information -->
           <div class="card">
-            <a href="/admin/pending" style="text-decoration: none; "><h3>Total Pending</h3>
+            <a href="/administrator/pending" style="text-decoration: none; "><h3>Total Pending</h3>
             <p style="color: rgb(21, 0, 255);"><%= PendingCount %> </p></a>
-            
           </div>
           <div class="card" >
-            <a href="/admin/approved" style="text-decoration: none;"><h3>Approved</h3>
+            <a href="/administrator/approved" style="text-decoration: none;"><h3>Approved</h3>
             <p style="color: rgb(74, 181, 79);"><%= approvedCount %></p></a>
           </div>
           <div class="card">
-            <a href="/admin/rejected" style="text-decoration: none;"><h3>Rejected</h3>
+            <a href="/administrator/rejected" style="text-decoration: none;"><h3>Rejected</h3>
             <p style="color: rgb(255, 0, 0);"><%= RejectedCount %></p></a>
           </div>
           <!-- Add more cards as needed -->
         </section>
-        <!-- for administrator view -->
-        <h2>Administrator Status</h2>
-        <!-- <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/admin/home">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page">
-              <a href="/admin/homeadministrator">Administrator Status</a>
-            </li>
-          </ol>
-        </nav> -->
-        <section class="cards">
-          <!-- Cards or widgets for displaying data or information -->
-          <div class="card">
-            <a href="/admin/administratorPending" style="text-decoration: none; "><h3>Total Administrator Pending</h3>
-            <p style="color: rgb(21, 0, 255);"><%= Forwardadministrator  %> </p></a>
-            
-          </div>
-          <div class="card" >
-            <a href="/admin/administratorApproved" style="text-decoration: none;"><h3>Administrator Approved</h3>
-            <p style="color: rgb(74, 181, 79);"><%= Approvedadministrator  %></p></a>
-          </div>
-          <div class="card">
-            <a href="/admin/administratorRejected" style="text-decoration: none;"><h3>Administrator Rejected</h3>
-            <p style="color: rgb(255, 0, 0);"><%= Pendingadministrator %></p></a>
-          </div>
-          <!-- Add more cards as needed -->
-        </section>
+
+<!-- for administrator -->
+
+
+
+
+
+
+
+
         <section>
           <!-- <div class="headcard">
             <div class="card">

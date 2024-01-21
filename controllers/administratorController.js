@@ -47,7 +47,7 @@ const sendResetPasswordMail = async (name, email, token) => {
       html:
         "<p> hi " +
         name +
-        ', Please click here to <a href="https://prsuleaveease.onrender.com/admin/forget-password?token=' +
+        ', Please click here to <a href="http://prsuleaveease.onrender.com/admin/forget-password?token=' +
         token +
         '">Reset</a> Your Password.</p>',
     };
@@ -62,8 +62,6 @@ const sendResetPasswordMail = async (name, email, token) => {
     console.log(error.message);
   }
 };
-
-
 
 const loadLogin = async (req, res) => {
   try {
@@ -104,40 +102,6 @@ const verifyLogin = async (req, res) => {
   }
 };
 
-
-const sendvarifyMail = async(name, email, user_id)=>{
-
-  try{
-      const transporter =  nodemailer.createTransport({
-          host:'smtp.gmail.com',
-          port:587,
-          secure:false,
-          auth:{
-              user:config.emailUser,
-              pass:config.emailPassword
-          }
-       });
-      const mailOption = {
-          from:config.emailUser,
-          to:email,
-          subject:'for verification mail',
-          html:'<p> hi '+name+', Please click here to <a href="https://prsuleaveease.onrender.com/verify?id='+user_id+'">Verify</a> Your mail.</p>',
-      };
-          transporter.sendMail(mailOption, function(error, info){
-              if(error){
-                  console.log(error);
-              }else{
-                  console.log("Email has been sent:-",info.response);
-              }
-          })
-   
-   }catch(error){
-       console.log(error.message)
-   }
-}
-
-
-
 const loadRegister = async (req, res) => {
   try{
     const departmentData = await Department.find();
@@ -146,52 +110,39 @@ const loadRegister = async (req, res) => {
      console.log(error.message)
  }
 };
+const insertUser = async (req, res) => {
+  try {
+    const spassword = await securePassword(req.body.password);
+    const user = new User({
+      name: req.body.name,
+      email: req.body.email,
+      mobile: req.body.mobile,
+      address: req.body.address,
+      designation: req.body.designation,
+      pwd: req.body.pwd,
+      department: req.body.department,
+      image: req.file.filename,
+      password: spassword,
+      eid: "prsu101",
+      is_admin: 0,
+    });
 
-const insertUser = async(req, res)=>{
-  try{  
-
-      const email = req.body.email;
-      const existmail = await User.findOne({email: email });
-      if (existmail) {
-          // alert('This Email Allready exist');
-          res.render('login',{message:'This Email Allready exist '});
-          
-
-      } else {
-          
-      const spassword = await securePassword(req.body.password);
-      const user = new User({
-          name:req.body.name,
-          email:req.body.email,
-          dob:req.body.dob,
-          gender:req.body.gender,
-          mobile:req.body.mobile,
-          address:req.body.address,
-          designation:req.body.designation,
-          department:req.body.department,
-          image:req.file.filename,
-          password:spassword,
-          eid:"prsu101",
-          is_admin:0
-          
+    const userData = await user.save();
+    if (userData) {
+      sendvarifyMail(req.body.name, req.body.email, userData._id);
+      res.render("registration", {
+        message:
+          "Your registration has been successflly, Please varify your email",
       });
-
-      const userData = await user.save();
-      if(userData){
-          sendvarifyMail(req.body.name, req.body.email, userData._id);
-          res.render('login',{message:'Your registration has been successflly, Please varify your email'})
-      }else{
-          res.render('registration',{message:'Your registration has been failed'})
-      }
+    } else {
+      res.render("registration", {
+        message: "Your registration has been failed",
+      });
+    }
+  } catch (error) {
+    console.log(error.message);
   }
-
-
-
-
-   }catch(error){
-       console.log(error.message)
-   }
-}
+};
 
 const loadlogout = async (req, res) => {
   try {
@@ -201,6 +152,7 @@ const loadlogout = async (req, res) => {
     console.log(error.message);
   }
 };
+
 const forgetLoad = async (req, res) => {
   try {
     res.render("forget");
@@ -396,128 +348,41 @@ const loaddeleteLeave = async (req, res) => {
 // dashbord
 const loadDashboard = async (req, res) => {
   try {
+    const userData = await User.findById({ _id: req.session.user_id });
+    const PendingCount = await Leave.find({status:"Forward Administrator"}).count();
+    const approvedCount = await Leave.find({status:"Administrator Approved"}).count();
+    const RejectedCount = await Leave.find({status:"Administrator Rejected"}).count();
 
-    const findUserDepartment = await User.findOne({ _id: req.session.user_id });
-
-    if (findUserDepartment) {
-      const userDepartment = findUserDepartment.department;
-      
-      // match department
-      const userData = await User.findOne({
-        $and: [
-          { _id: req.session.user_id },
-          { department: userDepartment }
-        ]
-        });
-
-
-        const PendingCount = await Leave.findOne({
-          $and:[
-            {status:"Pending"},
-            {d_name: userDepartment}
-          ]
-        }).count();
-    
-        const approvedCount = await Leave.findOne({
-          $and:[
-            {status:"Approved"},
-            {d_name: userDepartment}
-          ]
-        }).count();
-
-    
-        const Forwardadministrator = await Leave.findOne({
-          $and:[
-            {status:"Forward Administrator"},
-            {d_name: userDepartment}
-          ]
-        }).count();
-        const Pendingadministrator = await Leave.findOne({
-          $and:[
-            {status:"Administrator Rejected"},
-            {d_name: userDepartment}
-          ]
-        }).count();
-        const Approvedadministrator = await Leave.findOne({
-          $and:[
-            {status:"Administrator Approved"},
-            {d_name: userDepartment}
-          ]
-        }).count();
-    
-        const RejectedCount = await Leave.findOne({
-          $and:[
-            {status:"Rejected"},
-            {d_name: userDepartment}
-          ]
-        }).count();
-
-        
-      // user for home page
-      res.render("dashboard", {
-        user: userData,
-        PendingCount: PendingCount,
-        approvedCount:approvedCount,
-        RejectedCount:RejectedCount,
-        Forwardadministrator:Forwardadministrator,
-        Pendingadministrator:Pendingadministrator,
-        Approvedadministrator:Approvedadministrator
-        // 
-      
-      });
-
-    }
-
-
+    // user for home page
+    res.render("dashboard", {
+      user: userData,
+      PendingCount: PendingCount,
+      approvedCount:approvedCount,
+      RejectedCount:RejectedCount
+    });
   } catch (error) {
     console.log(error.message);
   }
 };
-
-
 // loaddomhome
 const loaddomhome = async (req, res) => {
   try {
     const userData = await User.findById({ _id: req.session.user_id });
-    const PendingCount = await Leave.find({ status: "Pending" }).countDocuments();
-    const approvedCount = await Leave.find({ status: "Approved" }).countDocuments();
-    const RejectedCount = await Leave.find({ status: "Rejected" }).countDocuments();
+    const PendingCount = await Leave.find({status:"Pending"}).count();
+    const approvedCount = await Leave.find({status:"Approved"}).count();
+    const RejectedCount = await Leave.find({status:"Rejected"}).count();
 
+    // user for home page
     res.render("domhome", {
       user: userData,
       PendingCount: PendingCount,
-      approvedCount: approvedCount,
-      RejectedCount: RejectedCount,
+      approvedCount:approvedCount,
+      RejectedCount:RejectedCount
     });
   } catch (error) {
-    console.error("Error in loaddomhome:", error);
-    res.status(500).send("Internal Server Error");
+    console.log(error.message);
   }
 };
-
-
-// loadhome administrator 
-const loadadministrator = async (req, res) => {
-  try {
-    const userData = await User.findById({ _id: req.session.user_id });
-    const PendingCount = await Leave.find({ status: "Administrator Pending" }).countDocuments();
-    const approvedCount = await Leave.find({ status: "Administrator Approved" }).countDocuments();
-    const ForwardadministratorCount = await Leave.find({ status: "Forward Administrator" }).countDocuments();
-    const RejectedCount = await Leave.find({ status: "Administrator Rejected" }).countDocuments();
-
-    res.render("administratoDashboard", {
-      user: userData,
-      PendingCount: PendingCount,
-      approvedCount: approvedCount,
-      RejectedCount: RejectedCount,
-      ForwardadministratorCount:ForwardadministratorCount
-    });
-  } catch (error) {
-    console.error("Error in administrator:", error);
-    res.status(500).send("Internal Server Error");
-  }
-};
-
 
 const loadProfile = async (req, res) => {
   try {
@@ -574,243 +439,51 @@ const loadstatus = async (req, res) => {
   }
 };
 
-
-
 // loadpending
 const loadpending = async (req, res) => {
   try {
-    const findUserDepartment = await User.findOne({ _id: req.session.user_id });
-    if (findUserDepartment) {
-      const userDepartment = findUserDepartment.department; 
-      // match department
-      const userData = await User.findOne({
-        $and: [
-          { _id: req.session.user_id },
-          { department: userDepartment }
-        ]
-        });
-
-        const PendingCount = await Leave.find({
-          $and:[
-            {status:"Pending"},
-            {d_name: userDepartment}
-          ]
-        });
-     
-        const leave = await Leave.find().exec();
-      // user for home page
-      res.render("pending", {
-        title: "pending",
-        leaves: leave,
-        PendingCount:PendingCount
-      });
-    }
-
+    // const PendingCount = await Leave.find({status:"Pending"});
+    const PendingCount = await Leave.find({status:"Forward Administrator"});
+    const leave = await Leave.find().exec();
+    res.render("pending", {
+      title: "pending",
+      leaves: leave,
+      PendingCount:PendingCount
+    });
   } catch (err) {
     res.json({ message: err.message });
   }
 };
-
-
-
 
 // loadapproved
 const loadapproved = async (req, res) => {
   try {
-
-    const findUserDepartment = await User.findOne({ _id: req.session.user_id });
-    if (findUserDepartment) {
-      const userDepartment = findUserDepartment.department; 
-      // match department
-      const userData = await User.findOne({
-        $and: [
-          { _id: req.session.user_id },
-          { department: userDepartment }
-        ]
-        });
-
-        const approvedCount = await Leave.find({
-          $and:[
-            {status:"Approved"},
-            {d_name: userDepartment}
-          ]
-        });
-     
-        const leave = await Leave.find().exec();
-      // user for home page
-      res.render("approved", {
-        title: "approved",
-        leaves: leave,
-        approvedCount:approvedCount
-      });
-    }
-
- 
+    const approvedCount = await Leave.find({status:"Administrator Approved"});
+    const leave = await Leave.find().exec();
+    res.render("approved", {
+      title: "approved",
+      leaves: leave,
+      approvedCount:approvedCount
+    });
   } catch (err) {
     res.json({ message: err.message });
   }
 };
-
-
 
 // loadrejected
 const loadrejected = async (req, res) => {
   try {
-
-
-    const findUserDepartment = await User.findOne({ _id: req.session.user_id });
-    if (findUserDepartment) {
-      const userDepartment = findUserDepartment.department; 
-      // match department
-      const userData = await User.findOne({
-        $and: [
-          { _id: req.session.user_id },
-          { department: userDepartment }
-        ]
-        });
-
-        const RejectedCount = await Leave.find({
-          $and:[
-            {status:"Rejected"},
-            {d_name: userDepartment}
-          ]
-        });
-     
-        const leave = await Leave.find().exec();
-      // user for home page
-      res.render("rejected", {
-        title: "rejected",
-        leaves: leave,
-        RejectedCount:RejectedCount
-      });
-    }
-
-
-
-
-
-
-
+    const RejectedCount = await Leave.find({status:"Administrator Rejected"});
+    const leave = await Leave.find().exec();
+    res.render("rejected", {
+      title: "rejected",
+      leaves: leave,
+      RejectedCount:RejectedCount
+    });
   } catch (err) {
     res.json({ message: err.message });
   }
 };
-
-
-// administrator loadpending
-const loadadministratorpending = async (req, res) => {
-  try {
-    const findUserDepartment = await User.findOne({ _id: req.session.user_id });
-    if (findUserDepartment) {
-      const userDepartment = findUserDepartment.department; 
-      // match department
-      const userData = await User.findOne({
-        $and: [
-          { _id: req.session.user_id },
-          { department: userDepartment }
-        ]
-        });
-
-        const PendingCount = await Leave.find({
-          $and:[
-            {status:"Forward Administrator"},
-            {d_name: userDepartment}
-          ]
-        });
-     
-        const leave = await Leave.find().exec();
-      // user for home page
-      res.render("administratorPending", {
-        title: "pending",
-        leaves: leave,
-        administratorForwardCount:PendingCount
-      });
-    }
-
-
-  } catch (err) {
-    res.json({ message: err.message });
-  }
-};
-
-// administrator loadApproved
-const loadadministratorapproved = async (req, res) => {
-  try {
-    const findUserDepartment = await User.findOne({ _id: req.session.user_id });
-    if (findUserDepartment) {
-      const userDepartment = findUserDepartment.department; 
-      // match department
-      const userData = await User.findOne({
-        $and: [
-          { _id: req.session.user_id },
-          { department: userDepartment }
-        ]
-        });
-
-      
-        const Approvedadministrator = await Leave.find({
-          $and:[
-            {status:"Administrator Approved"},
-            {d_name: userDepartment}
-          ]
-        });
-        
-     
-        const leave = await Leave.find().exec();
-      // user for home page
-      res.render("administratorApproved", {
-        title: "Approved",
-        leaves: leave,
-        Approvedadministrator:Approvedadministrator
-      });
-    }
-
-
-  } catch (err) {
-    res.json({ message: err.message });
-  }
-};
-
-
-// administrator loadRejected
-const loadadministratorrejected = async (req, res) => {
-  try {
-    const findUserDepartment = await User.findOne({ _id: req.session.user_id });
-    if (findUserDepartment) {
-      const userDepartment = findUserDepartment.department; 
-      // match department
-      const userData = await User.findOne({
-        $and: [
-          { _id: req.session.user_id },
-          { department: userDepartment }
-        ]
-        });
-
-        const RejectedCount = await Leave.find({
-          $and:[
-            {status:"Administrator Rejected"},
-            {d_name: userDepartment}
-          ]
-        });
-     
-        const leave = await Leave.find().exec();
-      // user for home page
-      res.render("administratorRejected", {
-        title: "Rejected",
-        leaves: leave,
-        Pendingadministrator:RejectedCount, 
-      });
-    }
-
-
-  } catch (err) {
-    res.json({ message: err.message });
-  }
-};
-
-
-
-
 
 
 
@@ -841,11 +514,7 @@ const updateAction = async (req, res) => {
             leave_type:req.body.leave_type,
             start_date:req.body.start_date,
             end_date:req.body.end_date,
-            days:req.body.days,
             status: req.body.status,
-            reason: req.body.reason,
-            
-
             // applied_date:Date(),
           },
         }
@@ -917,58 +586,6 @@ const adddepartment = async (req, res) => {
   }
 };
 
-// const userexport = async (req, res) => {
-//   try {
-//       const workbook = new ExcelJS.Workbook();
-//       const worksheet = workbook.addWorksheet("My User");
-
-//       worksheet.columns = [
-//           { header: "S no", key: "s_no" },
-//           { header: "Name", key: "name" },
-//           { header: "Email", key: "email" },
-//           { header: "Mobile", key: "mobile" },
-//           { header: "Image", key: "image" },
-//           { header: "address", key: "address" },
-//           { header: "Designation", key: "designation" },
-//           { header: "Is_admin", key: "is_admin" },
-//           { header: "eid", key: "eid" },
-//           { header: "department", key: "eidepartmentd" },
-//       ];
-
-//       let counter = 1;
-//       const userData = await User.find({ is_admin: 0 });
-
-//       userData.forEach((user) => {
-//           user.s_no = counter;
-//           worksheet.addRow(user);
-//           counter++;
-//       });
-
-//       worksheet.getRow(1).eachCell((cell) => {
-//           cell.font = { bold: true };
-//       });
-
-//       res.setHeader(
-//           "Content-Type",
-//           "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-//       );
-//       res.setHeader(
-//           "Content-Disposition",
-//           "attachment; filename=users.xlsx"
-//       );
-
-//       return workbook.xlsx.write(res).then(() => {
-//           res.status(200).end();
-//       });
-
-//   } catch (error) {
-//       console.log(error.message);
-//   }
-// };
-
-// pdf
-
-
 const userexport = async (req, res) => {
   try {
       const workbook = new ExcelJS.Workbook();
@@ -1018,7 +635,7 @@ const userexport = async (req, res) => {
   }
 };
 
-
+// pdf
 const userexportPdf = async (req, res) => {
   try {
     
@@ -1076,10 +693,6 @@ module.exports = {
   loadAddDepartment,
   userexport,
   userexportPdf,
-  loaddomhome,
-  loadadministrator,
-  loadadministratorpending,
-  loadadministratorapproved,
-  loadadministratorrejected
+  loaddomhome
 
 };

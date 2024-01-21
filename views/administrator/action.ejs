@@ -74,12 +74,8 @@
                 <input type="text" id="employee-name" value="<%= leave.name %>"   name="name" required>
             </div>
             <div class="form-group">
-                <label for="leave-type">Your Employee ID:</label>
+                <label for="leave-type">Your EID:</label>
                 <input type="text" value="<%= leave.eid %>" name="eid">
-            </div>
-            <div class="form-group">
-                <label for="leave-type">Employee Type</label>
-                 
             </div>
             <div class="form-group">
                 <label for="leave-type">Leave Type:</label>
@@ -94,22 +90,16 @@
                 <input type="date" id="end-date" value="<%= leave.end_date %>" name="end_date" required>
             </div>
             <div class="form-group">
-                <label for="end-date">Days:</label>
-                <input type="text" id="end-date" value="<%= leave.days %>" name="days" required>
-            </div>
-
-            <div class="form-group">
-              <label for="leave-type">Action:</label>
-              <select id="leave-type" id="status" name="status">
-                  <option value="Approved">Approved</option>
-                  <option value="Forward Administrator">Forward Administrator</option>
-                  <option value="Rejected">Rejected</option>
-                  <option value="Pending">Pending</option>
-              </select>
-              <div class="form-group">
                 <label for="reason">Reject Reason:</label>
                 <textarea id="reason" name="reason" rows="4" ></textarea>
             </div>
+            <div class="form-group">
+              <label for="leave-type">Action:</label>
+              <select id="leave-type" id="status" name="status">
+                  <option value="Administrator Approved">Adminstrator Approved</option>
+                  <option value="Administrator Rejected">Adminstrator Rejected</option>
+                  <option value="Forward Adminstrator">Adminstrator Forward</option>
+              </select>
           </div>
             <div class="form-group">
                 <input type="submit" value="Action">

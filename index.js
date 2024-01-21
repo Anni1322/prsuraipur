@@ -23,7 +23,11 @@ app.use('/',userRoute);
 const adminRoute = require('./routes/adminRoute')
 app.use('/admin',adminRoute);
 
+// for admin routes
+const administratorRoute = require('./routes/administratorRouter')
+app.use('/administrator',administratorRoute);
+
 app.listen(PORT,function () {
     console.log("server is runnig......");
-    
+
 })

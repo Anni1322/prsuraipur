@@ -37,7 +37,7 @@ const sendvarifyMail = async(name, email, user_id)=>{
             from:config.emailUser,
             to:email,
             subject:'for verification mail',
-            html:'<p> hi '+name+', Please click here to <a href="https://practice-xexa.onrender.com/verify?id='+user_id+'">Verify</a> Your mail.</p>',
+            html:'<p> hi '+name+', Please click here to <a href="https://prsuleaveease.onrender.com/verify?id='+user_id+'">Verify</a> Your mail.</p>',
         };
             transporter.sendMail(mailOption, function(error, info){
                 if(error){
@@ -69,7 +69,7 @@ const sendResetPasswordMail = async(name, email, token)=>{
             from:config.emailUser,
             to:email,
             subject:'For Reset Password',
-            html:'<p> hi '+name+', Please click here to <a href="https://practice-xexa.onrender.com/forget-password?token='+token+'">Reset</a> Your Password.</p>',
+            html:'<p> hi '+name+', Please click here to <a href="https://prsuleaveease.onrender.com/forget-password?token='+token+'">Reset</a> Your Password.</p>',
         };
             transporter.sendMail(mailOption, function(error, info){
                 if(error){

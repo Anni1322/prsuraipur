@@ -396,59 +396,34 @@
           </div>
 
         </header>
-        <h2>Dashboard</h2>
-        <!-- <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/admin">Home</a></li>
-          </ol>
-          <h2>
-            <a href="/admin/homeadministrator" style="text-decoration: none; color: #0056b3;">Administrator Status</a>
-          </h2>
-        </nav> -->
-        <section class="cards">
-          <!-- Cards or widgets for displaying data or information -->
-          <div class="card">
-            <a href="/admin/pending" style="text-decoration: none; "><h3>Total Pending</h3>
-            <p style="color: rgb(21, 0, 255);"><%= PendingCount %> </p></a>
-            
-          </div>
-          <div class="card" >
-            <a href="/admin/approved" style="text-decoration: none;"><h3>Approved</h3>
-            <p style="color: rgb(74, 181, 79);"><%= approvedCount %></p></a>
-          </div>
-          <div class="card">
-            <a href="/admin/rejected" style="text-decoration: none;"><h3>Rejected</h3>
-            <p style="color: rgb(255, 0, 0);"><%= RejectedCount %></p></a>
-          </div>
-          <!-- Add more cards as needed -->
-        </section>
-        <!-- for administrator view -->
         <h2>Administrator Status</h2>
-        <!-- <nav aria-label="breadcrumb">
+        <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/admin/home">Home</a></li>
             <li class="breadcrumb-item active" aria-current="page">
               <a href="/admin/homeadministrator">Administrator Status</a>
             </li>
           </ol>
-        </nav> -->
+        </nav>
         <section class="cards">
           <!-- Cards or widgets for displaying data or information -->
           <div class="card">
             <a href="/admin/administratorPending" style="text-decoration: none; "><h3>Total Administrator Pending</h3>
-            <p style="color: rgb(21, 0, 255);"><%= Forwardadministrator  %> </p></a>
+            <p style="color: rgb(21, 0, 255);"><%= ForwardadministratorCount %> </p></a>
             
           </div>
           <div class="card" >
-            <a href="/admin/administratorApproved" style="text-decoration: none;"><h3>Administrator Approved</h3>
-            <p style="color: rgb(74, 181, 79);"><%= Approvedadministrator  %></p></a>
+            <a href="/admin/approved" style="text-decoration: none;"><h3>Administrator Approved</h3>
+            <p style="color: rgb(74, 181, 79);"><%= approvedCount %></p></a>
           </div>
           <div class="card">
-            <a href="/admin/administratorRejected" style="text-decoration: none;"><h3>Administrator Rejected</h3>
-            <p style="color: rgb(255, 0, 0);"><%= Pendingadministrator %></p></a>
+            <a href="/admin/rejected" style="text-decoration: none;"><h3>Administrator Rejected</h3>
+            <p style="color: rgb(255, 0, 0);"><%= RejectedCount %></p></a>
           </div>
           <!-- Add more cards as needed -->
         </section>
+        <!-- for administrator view -->
+       
         <section>
           <!-- <div class="headcard">
             <div class="card">

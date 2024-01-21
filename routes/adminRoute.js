@@ -77,8 +77,13 @@ admin_route.get('/register',adminAuth.islogin,adminController.loadRegister);
 admin_route.post('/register',upload.single('image'),adminController.insertUser);
 
 admin_route.get('/pending',adminAuth.islogin,adminController.loadpending);
+admin_route.get('/administratorPending',adminAuth.islogin,adminController.loadadministratorpending);
+
 admin_route.get('/approved',adminAuth.islogin,adminController.loadapproved);
+admin_route.get('/administratorApproved',adminAuth.islogin,adminController.loadadministratorapproved);
+
 admin_route.get('/rejected',adminAuth.islogin,adminController.loadrejected);
+admin_route.get('/administratorRejected',adminAuth.islogin,adminController.loadadministratorrejected);
 
 // action
 admin_route.get('/action',adminAuth.islogin,adminController.actionLoad);
@@ -88,6 +93,7 @@ admin_route.post('/action',adminController.updateAction);
 // admintable 
 admin_route.get('/admintable',adminAuth.islogin,adminController.loadadmintable);
 admin_route.get('/dom',adminAuth.islogin,adminController.loaddomhome);
+admin_route.get('/homeadministrator',adminAuth.islogin,adminController.loadadministrator);
 
 admin_route.get('/department',adminAuth.islogin,adminController.loaddepartment);
 admin_route.get('/add_department',adminController.loadAddDepartment);
